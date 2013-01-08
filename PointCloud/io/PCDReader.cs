@@ -1,8 +1,28 @@
-﻿using System;
+﻿/*
+Pointcloud library for .NET
+Copyright (C) 2013  M. Hofman
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using PointCloud.Exceptions;
 
 namespace PointCloud.io
 {
@@ -50,6 +70,16 @@ namespace PointCloud.io
                     {
                         header.Version = getVersion(line);
                     }
+                    if (line.Contains("FIELDS"))
+                    {
+                        // Read fieldsnames from the line expects no spaces in field name
+                        string[] fields = line.Substring(7).Split(' ');
+
+                        for(int i = 0; i < fields.Length; i++)
+                        {
+                            header.Fields.Add(i, new FieldDescription { Name = fields[i] });
+                        }
+                    }
                     if (line.Contains("WIDTH"))
                     {
                         header.Width = Convert.ToInt32(line.Substring(6));                  
@@ -66,6 +96,11 @@ namespace PointCloud.io
             return header;
         }
 
+        /// <summary>
+        /// Retrieves the version from a version String. String is in format VERSION 0.8.
+        /// </summary>
+        /// <param name="line">String</param>
+        /// <returns>PCD Version</returns>
         private PCDVersion getVersion(String line)
         {
             PCDVersion returnval = PCDVersion.PCDv5;
@@ -74,13 +109,17 @@ namespace PointCloud.io
             {
                 returnval = PCDVersion.PCDv7;
             }
-            else if (value == ".6")
+            else if (value == ".6" || value == "0.6")
             {
                 returnval = PCDVersion.PCDv6;
             }
             else if (value == ".5" || value == "0.5")
             {
                 returnval = PCDVersion.PCDv5;
+            }
+            else
+            {
+                throw new PointCloudException("No version information found in PCD file.");
             }
 
             return returnval;
