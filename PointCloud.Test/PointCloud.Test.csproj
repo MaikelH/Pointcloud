@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F08FC0D5-2719-4EDB-B5E8-241C54903EBD}</ProjectGuid>
+    <ProjectGuid>{2D4A485B-BFDC-46E8-AF2E-9E995763B938}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PointCloud</RootNamespace>
-    <AssemblyName>PointCloud</AssemblyName>
+    <RootNamespace>PointCloud.Test</RootNamespace>
+    <AssemblyName>PointCloud.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,17 +44,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\IsNotDenseException.cs" />
-    <Compile Include="Exceptions\PointCloudException.cs" />
-    <Compile Include="io\FieldDescription.cs" />
-    <Compile Include="io\PCDHeader.cs" />
-    <Compile Include="io\PCDReader.cs" />
-    <Compile Include="io\PCDVersion.cs" />
-    <Compile Include="PointCloud.cs" />
-    <Compile Include="PointTypes\PointT.cs" />
-    <Compile Include="PointTypes\PointXY.cs" />
-    <Compile Include="PointTypes\PointXYZ.cs" />
+    <Compile Include="PCDReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="test.pcd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PointCloud\PointCloud.csproj">
+      <Project>{F08FC0D5-2719-4EDB-B5E8-241C54903EBD}</Project>
+      <Name>PointCloud</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
