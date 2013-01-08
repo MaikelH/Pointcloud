@@ -9,7 +9,7 @@ namespace PointCloud
     public class PointCloud<T> where T:PointT
     {
         private bool _isDense = true;
-        private IList<T> _points; 
+        private List<T> _points; 
 
         public PointCloud()
         {

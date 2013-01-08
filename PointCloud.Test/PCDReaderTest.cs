@@ -77,6 +77,11 @@ namespace PointCloud.Test
             PCDHeader header = reader.ReadHeader("test.pcd");
 
             Assert.AreEqual(4, header.Fields.Count);
+            Assert.AreEqual(4, header.Fields[0].Size);
+            Assert.AreEqual('F', header.Fields[0].Type);
+            Assert.AreEqual(1, header.Fields[0].Count);
         }
+
+
     }
 }

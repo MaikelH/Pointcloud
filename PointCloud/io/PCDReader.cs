@@ -36,6 +36,8 @@ namespace PointCloud.io
         /// <returns></returns>
         public PointCloud<T> Read(String filename, int offset)
         {
+            PCDHeader header = this.ReadHeader(filename);
+
             throw new NotImplementedException();
         }
 
@@ -46,23 +48,24 @@ namespace PointCloud.io
         /// <returns></returns>
         public static PointCloud<T> LoadPCDFile(String filename)
         {
-
-            throw new NotImplementedException();
+            PCDReader<T> reader = new PCDReader<T>();
+            return reader.Read(filename, 0);
         }
 
         /// <summary>
         /// Reads the header of PCD file;
         /// </summary>
-        /// <param name="Filename">PCD File</param>
+        /// <param name="filename">PCD File</param>
         /// <returns>PCDHeader object</returns>
-        public PCDHeader ReadHeader(string Filename)
+        public PCDHeader ReadHeader(string filename)
         {
             PCDHeader header = new PCDHeader();
 
-            using (StreamReader sr = new StreamReader(Filename))
+            using (StreamReader sr = new StreamReader(filename))
             {
                 String line = sr.ReadLine();
 
+                // TODO: Code needs some refactoring. Lots of repeated code but it works.
                 // Keep reading until Datasection is found
                 while(line != null && !line.Contains("DATA"))
                 {
@@ -79,6 +82,55 @@ namespace PointCloud.io
                         {
                             header.Fields.Add(i, new FieldDescription { Name = fields[i] });
                         }
+                    }
+                    if (line.Contains("SIZE"))
+                    {
+                        if(header.Fields.Count == 0)
+                        {
+                            throw new PointCloudException("No fields found in pcb file.");
+                        }
+
+                        string[] fields = line.Substring(7).Split(' ');
+
+                        for (int i = 0; i < fields.Length; i++)
+                        {
+                            FieldDescription desc = header.Fields[i];
+                            desc.Size = Convert.ToInt32(fields[i]);
+                            header.Fields[i] = desc;
+                        }
+                    }
+                    if (line.Contains("TYPE"))
+                    {
+                            if (header.Fields.Count == 0)
+                        {
+                            throw new PointCloudException("No fields found in pcb file.");
+                        }
+
+                        string[] fields = line.Substring(5).Split(' ');
+
+                        for (int i = 0; i < fields.Length; i++)
+                        {
+                            FieldDescription desc = header.Fields[i];
+                            desc.Type = fields[i].ToCharArray()[0];
+                            header.Fields[i] = desc;
+                        }     
+                    }
+
+                    if (line.Contains("COUNT"))
+                    {
+                        if (header.Fields.Count == 0)
+                        {
+                            throw new PointCloudException("No fields found in pcb file.");
+                        }
+
+                        string[] fields = line.Substring(6).Split(' ');
+
+                        for (int i = 0; i < fields.Length; i++)
+                        {
+                            FieldDescription desc = header.Fields[i];
+                            desc.Count = Convert.ToInt32(fields[i]);
+                            header.Fields[i] = desc;
+                        } 
                     }
                     if (line.Contains("WIDTH"))
                     {
