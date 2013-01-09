@@ -19,9 +19,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using PointCloud.Exceptions;
 
 namespace PointCloud.io
@@ -35,7 +35,7 @@ namespace PointCloud.io
         /// <returns></returns>
         public PointCloud<T> Read(String filename)
         {
-            return this.Read(filename, 0);
+            return Read(filename, 0);
         }
 
         /// <summary>
@@ -46,20 +46,40 @@ namespace PointCloud.io
         /// <returns>Pointcloud of type T</returns>
         public PointCloud<T> Read(String filename, int offset)
         {
-            PointCloud<T> cloud = new PointCloud<T>();
-            PCDHeader header = this.ReadHeader(filename);
-            cloud.Height = header.Height;
-            cloud.Width = header.Width;
+            PCDHeader header = ReadHeader(filename);
+            List<T> pointList;
 
             // Start reading data
             using (StreamReader sr = new StreamReader(filename))
             {
-                String line = sr.ReadLine(); 
-   
-                
+                String line = sr.ReadLine();
+
+                while (!line.Contains("DATA"))
+                {
+                    line = sr.ReadLine();
+                }
+
+                pointList = readData(sr);
             }
 
-            throw new NotImplementedException();
+            PointCloud<T> cloud = new PointCloud<T>(pointList);
+            cloud.Height = header.Height;
+            cloud.Width = header.Width;
+
+            return cloud;
+        }
+
+        private List<T> readData(StreamReader sr)
+        {
+            List<T> points = new List<T>();
+            String line = sr.ReadLine();
+            while(line != null)
+            {
+                points.Add((T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(line));
+                line = sr.ReadLine();
+            }
+
+            return points;
         }
 
         /// <summary>

@@ -82,6 +82,14 @@ namespace PointCloud.Test
             Assert.AreEqual(1, header.Fields[0].Count);
         }
 
+        [Test]
+        public void FileReadCompleteTest()
+        {
+            PCDReader<PointXYZ> reader = new PCDReader<PointXYZ>();
+            PointCloud<PointXYZ> cloud = reader.Read("test.pcd");
+
+            Assert.AreEqual(213, cloud.Points.Count);
+        }
 
     }
 }
