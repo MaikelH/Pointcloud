@@ -32,17 +32,38 @@ namespace PointCloud.io
         /// 
         /// </summary>
         /// <param name="filename"></param>
-        /// <param name="offset"></param>
         /// <returns></returns>
+        public PointCloud<T> Read(String filename)
+        {
+            return this.Read(filename, 0);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename">File to read from</param>
+        /// <param name="offset">Offset to start reading from</param>
+        /// <returns>Pointcloud of type T</returns>
         public PointCloud<T> Read(String filename, int offset)
         {
+            PointCloud<T> cloud = new PointCloud<T>();
             PCDHeader header = this.ReadHeader(filename);
+            cloud.Height = header.Height;
+            cloud.Width = header.Width;
+
+            // Start reading data
+            using (StreamReader sr = new StreamReader(filename))
+            {
+                String line = sr.ReadLine(); 
+   
+                
+            }
 
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// 
+        /// Reads a poincloud from the specified *.pcd file. Supports different version of the pcd file format.
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
@@ -63,7 +84,7 @@ namespace PointCloud.io
 
             using (StreamReader sr = new StreamReader(filename))
             {
-                String line = sr.ReadLine();
+                    String line = sr.ReadLine();
 
                 // TODO: Code needs some refactoring. Lots of repeated code but it works.
                 // Keep reading until Datasection is found
