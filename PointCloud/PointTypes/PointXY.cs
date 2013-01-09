@@ -2,27 +2,27 @@
 {
     public class PointXY : PointT
     {
-        private double _x;
-        private double _y;
+        private float _x;
+        private float _y;
         
         public PointXY()
         {
             _x = _y = 0;
         }
 
-        public PointXY(double x, double y)
+        public PointXY(float x, float y)
         {
             X = x;
             Y = y;
         }
 
-        public double X
+        public float X
         {
             get { return _x; }
             set { _x = value; }
         }
 
-        public double Y
+        public float Y
         {
             get { return _y; }
             set { _y = value; }

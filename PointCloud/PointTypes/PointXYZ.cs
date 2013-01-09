@@ -11,11 +11,11 @@ namespace PointCloud
             Z = 0;
         }
 
-        public PointXYZ(double x, double y, double z) : base(x, y)
+        public PointXYZ(float x, float y, float z) : base(x, y)
         {
             Z = z;
         }
 
-        public double Z { get; set; }
+        public float Z { get; set; }
     }
 }

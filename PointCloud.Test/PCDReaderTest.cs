@@ -89,6 +89,10 @@ namespace PointCloud.Test
             PointCloud<PointXYZ> cloud = reader.Read("test.pcd");
 
             Assert.AreEqual(213, cloud.Points.Count);
+
+            Assert.AreEqual(0.93773, cloud[0].X, 0.000001);
+            Assert.AreEqual(0.33763, cloud[0].Y, 0.000001);
+            Assert.AreEqual(0, cloud[0].Z, 0.000001);
         }
 
     }
