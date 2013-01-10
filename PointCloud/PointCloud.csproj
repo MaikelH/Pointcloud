@@ -47,6 +47,7 @@
     <Compile Include="io\PCDReader.cs" />
     <Compile Include="io\PCDVersion.cs" />
     <Compile Include="PointCloud.cs" />
+    <Compile Include="PointTypes\Converters\PointXYConvervter.cs" />
     <Compile Include="PointTypes\Converters\PointXYZConverter.cs" />
     <Compile Include="PointTypes\PointT.cs" />
     <Compile Include="PointTypes\PointXY.cs" />

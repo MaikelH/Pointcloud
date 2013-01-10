@@ -1,4 +1,7 @@
-Pointcloud is library for working with Pointclouds. 
+Pointcloud is a library for working with Pointclouds.
+
+Features:
+- Support for reading *.pcd files 
 
 How to use
 ----------
