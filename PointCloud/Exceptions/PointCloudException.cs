@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PointCloud.Exceptions
 {
-    class PointCloudException : Exception
+    public class PointCloudException : Exception
     {
         public PointCloudException() {}
 

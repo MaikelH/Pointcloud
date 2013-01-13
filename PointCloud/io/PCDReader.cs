@@ -59,7 +59,14 @@ namespace PointCloud.io
                     line = sr.ReadLine();
                 }
 
-                pointList = readData(sr);
+                if(line.Contains("ascii"))
+                {
+                    pointList = readData(sr);    
+                }
+                else
+                {
+                    throw new PCDReaderException("Data in file in unrecognized format.");
+                }
             }
 
             PointCloud<T> cloud = new PointCloud<T>(pointList);
