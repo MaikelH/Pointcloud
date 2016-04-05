@@ -42,5 +42,21 @@ namespace PointCloud.Test
 
             Assert.AreEqual("1 2 3", TypeDescriptor.GetConverter(point).ConvertTo(point, typeof(string)));
         }
+
+        [Test]
+        public void PointRGBAConvertFromTest()
+        {
+
+            var bytes = new byte[] { 0x00, 0x00, 0x00, 0x00, 0x5a, 0x24, 0xd7, 0x44, 0xbc, 0x77, 0xfb, 0x43, 0x00, 0x00, 0x80, 0x3f };
+            PointXYZRGBA point = (PointXYZRGBA)TypeDescriptor.GetConverter(typeof(PointXYZRGBA)).ConvertFrom(bytes);
+
+            Assert.AreEqual(0, point.X, 0.000001);
+            Assert.AreEqual(1721.136, point.Y, 0.000001);
+            Assert.AreEqual(502.9354, point.Z, 0.000001);
+            Assert.AreEqual(0x00, point.R);
+            Assert.AreEqual(0x00, point.G);
+            Assert.AreEqual(0x80, point.B);
+            Assert.AreEqual(0x3f, point.A);
+        }
     }
 }
