@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,8 +51,10 @@
     <Compile Include="PointCloud.cs" />
     <Compile Include="PointTypes\Converters\PointXYConvervter.cs" />
     <Compile Include="PointTypes\Converters\PointXYZConverter.cs" />
+    <Compile Include="PointTypes\Converters\PointXYZRGBAConverter.cs" />
     <Compile Include="PointTypes\PointT.cs" />
     <Compile Include="PointTypes\PointXY.cs" />
+    <Compile Include="PointTypes\PointXYZRGBA.cs" />
     <Compile Include="PointTypes\PointXYZ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
