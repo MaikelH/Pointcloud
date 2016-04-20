@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using PointCloud.Exceptions;
+using System.Text;
 
 namespace PointCloud.io
 {
@@ -61,7 +62,11 @@ namespace PointCloud.io
 
                 if(line.Contains("ascii"))
                 {
-                    pointList = readData(sr);    
+                    pointList = readData(sr);
+                }
+                else if (line.Contains("binary"))
+                {
+                    pointList = readBinData(sr);    
                 }
                 else
                 {
@@ -88,6 +93,56 @@ namespace PointCloud.io
 
             return points;
         }
+
+
+
+
+        public List<T> readBinData(StreamReader sr)
+        {
+            sr.BaseStream.Seek(0,0);
+            BinaryReader readInfo = new BinaryReader(sr.BaseStream);
+
+            StringBuilder headerRow;
+            char currentSymbol;
+            Int64 Count = 0;
+
+            do
+            {
+                headerRow = new StringBuilder();
+                do
+                {
+                    currentSymbol = readInfo.ReadChar();
+                    if (currentSymbol == '\r')
+                    {
+                        continue;
+                    }
+                    headerRow.Append(currentSymbol);
+                } while (currentSymbol != '\n');
+
+                string s = headerRow.ToString();
+
+                if (s.StartsWith("POINTS "))
+                {
+                    Count = Convert.ToInt64(s.Substring(7, s.Length - 8));
+                }
+            } while (headerRow.ToString() != "DATA binary\n");
+
+            List<T> points = new List<T>();
+            var bytes = readInfo.ReadBytes(16);
+            while(bytes != null && bytes.Length==16)
+            {
+                points.Add((T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(bytes));
+                bytes = readInfo.ReadBytes(16);
+            }
+            return points;
+
+        }
+
+
+
+
+
+
 
         /// <summary>
         /// Reads a poincloud from the specified *.pcd file. Supports different version of the pcd file format.

@@ -95,5 +95,24 @@ namespace PointCloud.Test
             Assert.AreEqual(0, cloud[0].Z, 0.000001);
         }
 
+        [Test]
+        public void BinFileReadCompleteTest()
+        {
+            PCDReader<PointXYZRGBA> reader = new PCDReader<PointXYZRGBA>();
+            PointCloud<PointXYZRGBA> cloud = reader.Read("testbin.pcd");
+
+            Assert.AreEqual(63940, cloud.Points.Count);
+
+
+            Assert.AreEqual(0, cloud[0].X, 0.000001);
+            Assert.AreEqual(1721.136, cloud[0].Y, 0.000001);
+            Assert.AreEqual(502.9354, cloud[0].Z, 0.000001);
+            Assert.AreEqual(0x00, cloud[0].R);
+            Assert.AreEqual(0x00, cloud[0].G);
+            Assert.AreEqual(0x80, cloud[0].B);
+            Assert.AreEqual(0x3f, cloud[0].A);
+        }
+
+
     }
 }
