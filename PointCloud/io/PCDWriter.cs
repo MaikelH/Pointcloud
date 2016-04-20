@@ -23,10 +23,10 @@ namespace PointCloud.io
                                     "SIZE 4 4 4 4\n" +
                                     "TYPE F F F U\n" +
                                     "COUNT 1 1 1 1\n" +
-                                    string.Format("WIDTH {0}\n", pointList.Count >> 1) +
+                                    string.Format("WIDTH {0}\n", pointList.Count) +
                                     "HEIGHT 1\n" +
                                     "VIEWPOINT 0 0 0 1 0 0 0\n" +
-                                    string.Format("POINTS {0}\n", pointList.Count >> 1) +
+                                    string.Format("POINTS {0}\n", pointList.Count) +
                                     "DATA binary\n";
 
                     writeInfo.Write(Encoding.ASCII.GetBytes(s));
