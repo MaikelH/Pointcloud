@@ -2,18 +2,20 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F08FC0D5-2719-4EDB-B5E8-241C54903EBD}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{E1A0E807-55D6-4E2F-864E-DF75EE0712C5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PointCloud</RootNamespace>
-    <AssemblyName>PointCloud</AssemblyName>
+    <RootNamespace>testpoint</RootNamespace>
+    <AssemblyName>testpoint</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,7 +24,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,7 +36,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,23 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\IsNotDenseException.cs" />
-    <Compile Include="Exceptions\PCDReaderException.cs" />
-    <Compile Include="Exceptions\PointCloudException.cs" />
-    <Compile Include="io\FieldDescription.cs" />
-    <Compile Include="io\PCDHeader.cs" />
-    <Compile Include="io\PCDReader.cs" />
-    <Compile Include="io\PCDVersion.cs" />
-    <Compile Include="io\PCDWriter.cs" />
-    <Compile Include="PointCloud.cs" />
-    <Compile Include="PointTypes\Converters\PointXYConvervter.cs" />
-    <Compile Include="PointTypes\Converters\PointXYZConverter.cs" />
-    <Compile Include="PointTypes\Converters\PointXYZRGBAConverter.cs" />
-    <Compile Include="PointTypes\PointT.cs" />
-    <Compile Include="PointTypes\PointXY.cs" />
-    <Compile Include="PointTypes\PointXYZRGBA.cs" />
-    <Compile Include="PointTypes\PointXYZ.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PointCloud\PointCloud.csproj">
+      <Project>{F08FC0D5-2719-4EDB-B5E8-241C54903EBD}</Project>
+      <Name>PointCloud</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
