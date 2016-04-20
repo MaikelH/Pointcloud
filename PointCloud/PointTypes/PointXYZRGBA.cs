@@ -14,13 +14,13 @@ namespace PointCloud
             A = 0;
         }
 
-        public PointXYZRGBA(float x, float y, float z, byte r, byte g, byte b, byte a)
+        public PointXYZRGBA(float x, float y, float z, int r, int g, int b, int a)
             : base(x, y, z)
         {
-            R = r;
-            G = g;
-            B = b;
-            A = a;
+            R = (byte)r;
+            G = (byte)g;
+            B = (byte)b;
+            A = (byte)a;
         }
 
         public byte R { get; set; }

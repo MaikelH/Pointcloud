@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PCDWriterTest.cs" />
     <Compile Include="PCDReaderTest.cs" />
     <Compile Include="PointTypeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
